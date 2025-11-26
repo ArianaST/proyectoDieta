@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados - Plan DEMO{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">Resultados del plan (DEMO)</h1>
+
+<h4>Resumen</h4>
+<ul>
+  <li><strong>Días:</strong> {{ resumen.dias }}</li>
+  <li><strong>Peso (kg):</strong> {{ resumen.peso_kg }}</li>
+  <li><strong>Altura (cm):</strong> {{ resumen.altura_cm }}</li>
+  <li><strong>Género:</strong> {{ resumen.genero }}</li>
+  <li>
+    <strong>IMC calculado:</strong>
+    {% if resumen.imc is not none %}
+      {{ resumen.imc }}
+    {% else %}
+      No disponible
+    {% endif %}
+  </li>
+</ul>
+
+<hr>
+
+<h4>Plan (solo demo)</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Día</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for fila in plan %}
+    <tr>
+      <td>{{ fila.dia }}</td>
+      <td>{{ fila.descripcion }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

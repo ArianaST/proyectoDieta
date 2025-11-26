@@ -1,0 +1,64 @@
+<!-- app/templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Inicio - Plan de dieta DEMO{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Diseña tu plan de dieta (DEMO)</h1>
+
+<p class="text-muted">
+  Esta versión solo usa tus datos (días, peso, altura y género) para calcular el IMC
+  y generar un plan de prueba. Aún no hay CSP ni Recocido reales, es solo para
+  comprobar la comunicación entre front-end y back-end.
+</p>
+
+<form method="POST" action="{{ url_for('generar_plan') }}" class="row g-3">
+
+  <!-- Días -->
+  <div class="col-md-4">
+    <label for="dias" class="form-label">Días del plan</label>
+    <input type="number" id="dias" name="dias" class="form-control"
+           min="1" max="14" value="7">
+  </div>
+
+  <!-- Peso -->
+  <div class="col-md-4">
+    <label for="peso_kg" class="form-label">Peso (kg)</label>
+    <input type="number" step="0.1" id="peso_kg" name="peso_kg"
+           class="form-control" value="70">
+  </div>
+
+  <!-- Altura -->
+  <div class="col-md-4">
+    <label for="altura_cm" class="form-label">Altura (cm)</label>
+    <input type="number" step="1" id="altura_cm" name="altura_cm"
+           class="form-control" value="170">
+  </div>
+
+  <!-- Género -->
+  <div class="col-md-4">
+    <label for="genero" class="form-label">Género</label>
+    <select id="genero" name="genero" class="form-select">
+      <option value="femenino">Femenino</option>
+      <option value="masculino">Masculino</option>
+      <option value="otro">Otro / Prefiero no decir</option>
+    </select>
+  </div>
+
+    <div class="col-12 form-check">
+    <input class="form-check-input" type="checkbox"
+           id="usar_recocido" name="usar_recocido" checked>
+    <label class="form-check-label" for="usar_recocido">
+      Aplicar Recocido Simulado (SOLO ES ADORNO NO LO USAMOS AÚN HASTA QUE NO SE IMPLENTE)
+    </label>
+  </div>
+
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">
+      Generar plan DEMO
+    </button>
+  </div>
+
+</form>
+{% endblock %}
