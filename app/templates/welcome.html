@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenido a tu plan de dieta{% endblock %}
+
+{% block content %}
+<div id="welcome-screen" class="welcome-page" data-next-url="{{ url_for('index') }}">
+  <div class="welcome-card">
+    <!-- Imagen que tú vas a poner en static/img -->
+    <div class="welcome-image-wrapper">
+      <img
+        src="{{ url_for('static', filename='img/bienvenida_dieta.png') }}"
+        alt="Ilustración plan de dieta"
+        class="welcome-image"
+      >
+    </div>
+
+    <h1 class="welcome-title">Bienvenido a tu diseño de plan de dieta personalizada</h1>
+
+    <p class="welcome-subtitle">
+      Integraremos tus datos y la comida de tu región para construir un menú
+      equilibrado, variado y sostenible.
+    </p>
+
+    <p class="welcome-hint">
+      Preparando tu espacio de trabajo...
+    </p>
+  </div>
+</div>
+{% endblock %}

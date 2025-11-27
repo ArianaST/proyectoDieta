@@ -7,9 +7,8 @@ from . import app  # instancia global app
 from .core.modelo_csp import resolver_csp
 #from .core.recocido import aplicar_recocido aun no ocupo pk es DEMO
 
-# -------------------------------------------------------------------
+
 # Cargar BD_JUNTA.csv una sola vez
-# -------------------------------------------------------------------
 DATA_DIR = app.config.get("DATA_DIR")
 if DATA_DIR is None:
     BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,31 +20,43 @@ df_bd = pd.read_csv(BD_PATH)
 # quitar columnas tipo 'Unnamed: 0' si existen
 df_bd = df_bd.loc[:, ~df_bd.columns.str.startswith("Unnamed")]
 
-# -------------------------------------------------------------------
 # endpointtttttttt
-# -------------------------------------------------------------------
+
 
 @app.route("/", methods=["GET"])
+def welcome():
+    """
+    Pantalla de bienvenida con animación.
+    Después de unos segundos redirige al formulario (/inicio).
+    """
+    return render_template("welcome.html")
+
+
+@app.route("/inicio", methods=["GET"])
 def index():
-    # SIEMPRE devolvemos algo
+    """
+    Pantalla con el formulario para capturar días, peso, altura y género.
+    """
     return render_template("index.html")
 
 
-@app.route("/plan", methods=["POST"])
-def generar_plan():
-    # 1) Leer valores del formulario (solo los que usamos)
+@app.route("/loading", methods=["POST"])
+def loading():
+    """
+    Vista intermedia:
+      - Recibe datos del formulario.
+      - Muestra animación de carga.
+      - Reenvía los datos a /plan tras unos segundos.
+    """
     dias_raw = request.form.get("dias", "1")
     peso_raw = request.form.get("peso_kg", "0")
     alt_raw  = request.form.get("altura_cm", "0")
 
-    # Manejar campos vacíos ("") para que no truene el cast a int/float
     dias = int(dias_raw) if dias_raw else 1
     peso_kg = float(peso_raw) if peso_raw else 0.0
     altura_cm = float(alt_raw) if alt_raw else 0.0
-
     genero = request.form.get("genero", "otro")
 
-    # 2) Empaquetar parámetros
     parametros = {
         "dias": dias,
         "peso_kg": peso_kg,
@@ -53,13 +64,34 @@ def generar_plan():
         "genero": genero,
     }
 
-    # 3) Llamar al CSP demo (no usa la BD aún, pero ya tiene la firma lista)
-    solucion = resolver_csp(parametros, df_bd)
+    return render_template("loading.html", parametros=parametros)
 
+
+@app.route("/plan", methods=["POST"])
+def generar_plan():
+    """
+    Genera el plan DEMO usando el CSP de juguete y muestra los resultados.
+    """
+    dias_raw = request.form.get("dias", "1")
+    peso_raw = request.form.get("peso_kg", "0")
+    alt_raw  = request.form.get("altura_cm", "0")
+
+    dias = int(dias_raw) if dias_raw else 1
+    peso_kg = float(peso_raw) if peso_raw else 0.0
+    altura_cm = float(alt_raw) if alt_raw else 0.0
+    genero = request.form.get("genero", "otro")
+
+    parametros = {
+        "dias": dias,
+        "peso_kg": peso_kg,
+        "altura_cm": altura_cm,
+        "genero": genero,
+    }
+
+    solucion = resolver_csp(parametros, df_bd)
     plan = solucion["plan"]
     resumen = solucion["resumen"]
 
-    # 4) Renderizar SIEMPRE una respuesta
     return render_template(
         "resultados.html",
         plan=plan,

@@ -1,0 +1,37 @@
+<!-- app/templates/loading.html -->
+{% extends "base.html" %}
+
+{% block title %}Generando plan...{% endblock %}
+
+{% block content %}
+<div class="loading-page">
+  <div class="loading-card">
+    <div class="spinner-border text-primary mb-3" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+
+    <h4 class="mb-3">Generando tu plan de dieta</h4>
+
+    <p class="text-muted mb-3">
+      Estamos calculando tu IMC y armando un plan de ejemplo
+      para los próximos {{ parametros.dias }} días.
+    </p>
+
+    <div class="loading-dots mb-2">
+      <span></span><span></span><span></span>
+    </div>
+
+    <p class="small text-secondary">
+      Esta es una versión demo.
+    </p>
+  </div>
+
+  <!-- Formulario oculto que se enviará automáticamente a /plan -->
+  <form id="auto-form" method="POST" action="{{ url_for('generar_plan') }}">
+    <input type="hidden" name="dias" value="{{ parametros.dias }}">
+    <input type="hidden" name="peso_kg" value="{{ parametros.peso_kg }}">
+    <input type="hidden" name="altura_cm" value="{{ parametros.altura_cm }}">
+    <input type="hidden" name="genero" value="{{ parametros.genero }}">
+  </form>
+</div>
+{% endblock %}
