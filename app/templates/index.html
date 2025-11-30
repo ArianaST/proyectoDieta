@@ -9,7 +9,7 @@
     <h1 class="mb-3 form-title">Diseña tu plan de dieta (DEMO)</h1>
 
     <p class="text-muted mb-4">
-      Esta versión usa tus datos (días, peso, altura y género) para calcular el IMC
+      Esta versión usa tus datos (días, peso, altura, género y edad) para calcular el IMC
       y generar un plan de prueba. En versiones futuras se integrarán tus preferencias,
       presupuesto y platillos regionales.
     </p>
@@ -45,6 +45,12 @@
           <option value="masculino">Masculino</option>
           <option value="otro">Otro / Prefiero no decir</option>
         </select>
+      </div>
+	  
+      <div class="col-md-4">
+        <label for="edad_anios" class="form-label">Edad</label>
+        <input type="number" id="edad_anios" name="edad_anios"
+               class="form-control" min="5" max="120" value="23">
       </div>
 
       <div class="col-12 mt-3">
