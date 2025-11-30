@@ -50,18 +50,21 @@ def loading():
     """
     dias_raw = request.form.get("dias", "1")
     peso_raw = request.form.get("peso_kg", "0")
-    alt_raw  = request.form.get("altura_cm", "0")
+    alt_raw = request.form.get("altura_cm", "0")
+    edad_raw = request.form.get("edad_anios", "0")
 
     dias = int(dias_raw) if dias_raw else 1
     peso_kg = float(peso_raw) if peso_raw else 0.0
     altura_cm = float(alt_raw) if alt_raw else 0.0
     genero = request.form.get("genero", "otro")
+    edad_anios = int(edad_raw) if edad_raw else 5
 
     parametros = {
         "dias": dias,
         "peso_kg": peso_kg,
         "altura_cm": altura_cm,
         "genero": genero,
+        "edad_anios": edad_anios,
     }
 
     return render_template("loading.html", parametros=parametros)
@@ -75,17 +78,21 @@ def generar_plan():
     dias_raw = request.form.get("dias", "1")
     peso_raw = request.form.get("peso_kg", "0")
     alt_raw  = request.form.get("altura_cm", "0")
+    edad_raw = request.form.get("edad_anios", "5")
 
     dias = int(dias_raw) if dias_raw else 1
     peso_kg = float(peso_raw) if peso_raw else 0.0
     altura_cm = float(alt_raw) if alt_raw else 0.0
     genero = request.form.get("genero", "otro")
+    edad_anios = int(edad_raw) if edad_raw else 5
+
 
     parametros = {
         "dias": dias,
         "peso_kg": peso_kg,
         "altura_cm": altura_cm,
         "genero": genero,
+        "edad_anios": edad_anios,
     }
 
     solucion = resolver_csp(parametros, df_bd)
