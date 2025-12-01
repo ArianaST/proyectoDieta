@@ -3,7 +3,7 @@ from flask import render_template, request
 from pathlib import Path
 import pandas as pd
 
-from . import app  # instancia global app
+from . import app  
 from .core.modelo_csp import resolver_csp
 #from .core.recocido import aplicar_recocido aun no ocupo pk es DEMO
 
@@ -68,6 +68,9 @@ def loading():
 
     return render_template("loading.html", parametros=parametros)
 
+@app.route("/referencias", methods=["GET"])
+def referencias():
+    return render_template("referencias.html")
 
 @app.route("/plan", methods=["POST"])
 def generar_plan():
@@ -104,3 +107,5 @@ def generar_plan():
         resumen=resumen,
         parametros=parametros,
     )
+
+    

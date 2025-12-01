@@ -1,191 +1,592 @@
 /* app/static/css/style.css */
-/* Paleta de verdes */
+
 :root {
-    --verde-oscuro: #1b5e20;
-    --verde-medio:  #43a047;
-    --verde-claro:  #e8f5e9;
-    --verde-acento: #66bb6a;
+  /* Paleta original de migue */
+  --color-lime:   #bdd950;
+  --color-red:    #fd0326;
+  --color-orange: #f26400;
+  --color-brown:  #a45523;
+  --color-brown-dark: #7f1b03;
+  --color-pink-red: #f42d44;
+  --color-gray-dark: #414449;
+
+  /* Derivados semánticos según la web */
+  --color-primary:        var(--color-lime);
+  --color-primary-dark:   #8ca52f;
+  --color-primary-soft:   #f5fadf;
+  --color-bg:             #fdfcfb;
+  --color-card-bg:        #ffffff;
+  --color-border-soft:    #e5e7eb;
+  --color-text-main:      #1f2933;
+  --color-text-muted:     #6b7280;
 }
 
-/* Fondo general */
+
+/* ===========================
+   GENERALES
+   =========================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    background-color: var(--verde-claro);
-    color: #1f2933;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, rgba(189, 217, 80, 0.30), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(242, 100, 0, 0.20), transparent 55%),
+              var(--color-bg);
+  color: var(--color-text-main);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
 }
 
-/* Navbar verde */
+/* Contenido principal envuelto paraa base.html */
+.main-container {
+  padding-top: 5rem;  
+  padding-bottom: 2.5rem;
+}
+
+/* Logo de navbar */
 .custom-navbar {
-    background-color: var(--verde-oscuro);
+  background: linear-gradient(90deg, var(--color-gray-dark), #2b2f36);
+  border-bottom: 1px solid rgba(189, 217, 80, 0.35);
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  transition:
+    padding 0.25s ease-out,
+    background-color 0.25s ease-out,
+    box-shadow 0.25s ease-out;
 }
 
-.custom-navbar .navbar-brand {
-    color: var(--verde-claro);
-    font-weight: 600;
+/* Logo  solo tamaño */
+.navbar-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 0.6rem;
+  object-fit: cover;
+}
+/* Marca */
+.custom-navbar .navbar-brand span {
+  color: #bdd950;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
-/* Botón primario en verde */
+/* Links de la derecha */
+.custom-navbar .nav-link {
+  color: #e5e7eb;
+  font-weight: 500;
+  position: relative;
+  padding-inline: 0.9rem;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #ffffff;
+}
+
+/* Subrayado animado */
+.custom-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: 0.3rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-lime), var(--color-orange));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease-out;
+}
+
+.custom-navbar .nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* “Chip” para el repo */
+.nav-link-pill {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding-inline: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-block: 0.35rem;
+}
+
+/* Iconos dentro de los pills */
+.nav-link-pill i {
+  font-size: 0.95rem;
+}
+
+
+/* Extra para  GitHub  */
+.nav-link-github {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+/* Toggler más visible en fondo oscuro */
+.custom-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.custom-navbar .navbar-toggler-icon {
+  filter: brightness(1.2);
+}
+
+/* Navbar encogido al hacer scroll */
+.custom-navbar.navbar-shrink {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  background-color: #2b2f36;
+}
+
+.main-container {
+  padding-top: 7rem;
+  padding-bottom: 2.5rem;
+}
+
+/*Fin base.html
+
+
+/* ===========================
+   BOTONES
+   =========================== */
+
 .btn-primary {
-    background-color: var(--verde-medio);
-    border-color: var(--verde-medio);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-orange));
+  border-color: transparent;
+  color: #111827;
+  font-weight: 600;
+  border-radius: 999px;
+  padding-inline: 1.75rem;
+  box-shadow: 0 8px 20px rgba(189, 217, 80, 0.35);
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, filter 0.15s ease-out;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background-color: var(--verde-acento);
-    border-color: var(--verde-acento);
+  filter: brightness(1.02);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(242, 100, 0, 0.35);
 }
 
-/* ========== BIENVENIDA ========== */
-
-.welcome-page {
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.btn-secondary {
+  border-radius: 999px;
 }
 
-.welcome-card {
-    background: #ffffff;
-    padding: 2.5rem 3rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
-    max-width: 640px;
-    width: 100%;
-    text-align: center;
-    animation: welcome-in 0.9s ease-out forwards;
+/*  estado de "loading" si se usa en JS  */
+.btn-primary.is-loading {
+  pointer-events: none;
+  opacity: 0.85;
 }
 
-.welcome-image-wrapper {
-    margin-bottom: 1.5rem;
-}
-
-.welcome-image {
-    max-width: 180px;
-    width: 60%;
-    height: auto;
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    animation: float 3s ease-in-out infinite;
-}
-
-.welcome-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--verde-oscuro);
-    margin-bottom: 1rem;
-}
-
-.welcome-subtitle {
-    font-size: 1rem;
-    color: #455a64;
-    margin-bottom: 1rem;
-}
-
-.welcome-hint {
-    font-size: 0.9rem;
-    color: var(--verde-medio);
-}
-
-/* ========== FORMULARIO (INICIO) ========== */
+/* ===========================
+   FORMULARIO (index.html)
+   =========================== */
 
 .form-page {
-    min-height: 60vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+  min-height: 70vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .form-card {
-    background: #ffffff;
-    padding: 2rem 2.5rem;
-    border-radius: 1.25rem;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
-    max-width: 900px;
-    width: 100%;
-    animation: slide-up 0.7s ease-out forwards;
+  background: #ffffff; /* card clara */
+  border-radius: 1.5rem;
+  padding: 2.5rem 2.75rem;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.16);
+  border-top: 4px solid var(--color-lime);
+  position: relative;
+  overflow: hidden;
+  animation: slide-up 0.6s ease-out forwards;
 }
 
-.form-title {
-    color: var(--verde-oscuro);
+/* ligerito brillo decorativo dentro de la card */
+.form-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right,
+      rgba(189, 217, 80, 0.22),
+      transparent 60%)
+    ,
+    radial-gradient(circle at bottom left,
+      rgba(242, 100, 0, 0.12),
+      transparent 55%);
+  pointer-events: none;
+  opacity: 0.95;
 }
 
-/* Opcional: bordes suaves en inputs */
-.form-control,
-.form-select {
-    border-radius: 0.75rem;
-    border-color: #cbd5e1;
+/* para que el contenido no se pegue demasiado al borde superior de la card */
+.form-card > * {
+  position: relative;
+  z-index: 1;
 }
 
-/* ========== LOADING PAGE (puntos + spinner) ========== */
+/* Título del formulario más marcado */
+.form-card .form-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--color-brown-dark);
+}
+.form-card .input-group {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 1rem;
+  border: 1px solid rgba(65, 68, 73, 0.12);
+  /* sombra más suave para que la card grande destaque más */
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  transition:
+    box-shadow 0.18s ease-out,
+    border-color 0.18s ease-out,
+    transform 0.12s ease-out,
+    background-color 0.18s ease-out;
+}
+
+.form-card .input-group-text {
+  border: none;
+  background: radial-gradient(circle at top left,
+              rgba(189, 217, 80, 0.5),
+              rgba(242, 100, 0, 0.18));
+  color: #111827;
+  font-size: 1.1rem;
+  padding-inline: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-card .form-control,
+.form-card .form-select {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding-inline: 0.9rem;
+  padding-block: 0.55rem;
+  font-size: 0.95rem;
+}
+
+.form-card .form-control::placeholder {
+  color: #9ca3af;
+  opacity: 1;
+}
+
+.form-card .form-control:focus,
+.form-card .form-select:focus {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+/* cuando cualquier input del grupo está en focus, resaltamos el grupo completo */
+.form-card .input-group:focus-within {
+  border-color: rgba(189, 217, 80, 0.9); 
+  box-shadow:
+    0 0 0 1px rgba(189, 217, 80, 0.9),
+    0 16px 35px rgba(15, 23, 42, 0.18);
+  transform: translateY(-1px);
+  background-color: #ffffff;
+}
+
+.form-card .form-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/*  columnas un poquito más compactas visualmente */
+.form-card .col-md-4 {
+  margin-bottom: 0.35rem;
+}
+
+
+/* ===========================
+   BIENVENIDA (welcome.html)
+   =========================== */
+
+.welcome-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-card {
+  background: var(--color-card-bg);
+  padding: 2.5rem 3rem;
+  border-radius: 1.6rem;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  animation: welcome-in 0.8s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+              rgba(189, 217, 80, 0.15),
+              rgba(244, 45, 68, 0.08));
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.welcome-image-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.welcome-image {
+  max-width: 200px;
+  width: 60%;
+  height: auto;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  animation: float 3s ease-in-out infinite;
+}
+
+.welcome-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--color-brown-dark);
+  margin-bottom: 0.75rem;
+}
+
+.welcome-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.welcome-hint {
+  font-size: 0.9rem;
+  color: var(--color-primary-dark);
+}
+
+/* ===========================
+   LOADING (loading.html)
+   =========================== */
 
 .loading-page {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loading-card {
-    background: #ffffff;
-    padding: 2rem 2.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    max-width: 380px;
-    width: 100%;
+  background: var(--color-card-bg);
+  padding: 2rem 2.5rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  animation: slide-up 0.5s ease-out forwards;
+  border-top: 4px solid var(--color-orange);
+}
+
+.loading-card h4 {
+  color: var(--color-brown-dark);
+}
+
+.loading-card .text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+/* spinner Bootstrap con color de tu paleta */
+.spinner-border.text-primary {
+  color: var(--color-primary) !important;
 }
 
 /* Puntitos animados */
 .loading-dots {
-    display: inline-block;
+  display: inline-block;
 }
 
 .loading-dots span {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    margin: 0 3px;
-    border-radius: 50%;
-    background-color: var(--verde-medio);
-    animation: bounce 1s infinite ease-in-out;
-    opacity: 0.4;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  animation: bounce 1s infinite ease-in-out;
+  opacity: 0.4;
 }
 
 .loading-dots span:nth-child(2) {
-    animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 
 .loading-dots span:nth-child(3) {
-    animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 
-/* ========== ANIMACIONES ========== */
+/* ===========================
+   RESULTADOS (resultados.html)
+   =========================== */
+
+.results-page {
+  animation: fade-in 0.45s ease-out forwards;
+}
+
+.results-header {
+  margin-bottom: 1.5rem;
+}
+
+.results-header h1 {
+  font-weight: 800;
+  color: var(--color-brown-dark);
+}
+
+.results-tagline {
+  color: var(--color-text-muted);
+}
+
+/* Tarjetas laterales (datos del paciente, nutrientes) */
+.results-card {
+  background: var(--color-card-bg);
+  border-radius: 1.2rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
+  border-top: 3px solid var(--color-primary);
+}
+
+.results-card h4 {
+  font-weight: 700;
+  color: var(--color-gray-dark);
+}
+
+/* Listado de datos del paciente */
+.results-card ul {
+  padding-left: 1rem;
+}
+
+/* Tablas */
+.results-table-wrapper {
+  background: var(--color-card-bg);
+  border-radius: 1.2rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid var(--color-orange);
+}
+
+.results-table-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.badge-plan {
+  background: rgba(189, 217, 80, 0.18);
+  color: var(--color-brown-dark);
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Afinar con Bootstrap */
+.table.results-table thead th {
+  border-bottom-width: 1px;
+  border-color: var(--color-border-soft);
+  color: var(--color-gray-dark);
+}
+
+.table.results-table tbody tr:hover {
+  background-color: rgba(189, 217, 80, 0.04);
+}
+
+/* Aviso */
+.results-disclaimer {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  background: var(--color-primary-soft);
+  padding: 0.7rem 1rem;
+  border-radius: 0.9rem;
+  border-left: 3px solid var(--color-pink-red);
+}
+
+/* ===========================
+   ANIMACIONES
+   =========================== */
 
 @keyframes welcome-in {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-6px);
-    }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ========== Animación resultados mas complejass ========== */
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
     from {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translateY(18px);
     }
     to {
         opacity: 1;
@@ -193,13 +594,196 @@ body {
     }
 }
 
-@keyframes bounce {
-    0%, 80%, 100% {
-        transform: translateY(0);
-        opacity: 0.3;
+/* ========== Animación x bloques (tabla resultados) ========== */
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
     }
-    40% {
-        transform: translateY(-6px);
+    to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
+/* ===========================
+   VISTA DE REFERENCIAS
+   =========================== */
+
+.references-page {
+  min-height: 60vh;
+  padding-top: 0.5rem;
+  animation: fade-in 0.45s ease-out forwards;
+}
+
+.references-header h1 {
+  font-weight: 800;
+  color: var(--color-brown-dark);
+}
+
+.references-header p {
+  max-width: 640px;
+}
+
+/* Tarjetas de referencias */
+.reference-card {
+  background: var(--color-card-bg);
+  border-radius: 1.2rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+  border-top: 3px solid var(--color-primary);
+  position: relative;
+  overflow: hidden;
+  animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Batoncito arriba de cada card */
+.reference-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(189, 217, 80, 0.18);
+  color: var(--color-brown-dark);
+  margin-bottom: 0.75rem;
+}
+
+.reference-badge i {
+  font-size: 1rem;
+}
+
+/* Lista de links dentro de cada tarjeta */
+.reference-list li + li {
+  margin-top: 0.25rem;
+}
+
+.reference-list a {
+  text-decoration: none;
+  color: var(--color-gray-dark);
+  font-size: 0.95rem;
+  position: relative;
+  padding-bottom: 0.05rem;
+}
+
+.reference-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-lime), var(--color-orange));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.18s ease-out;
+}
+
+.reference-list a:hover {
+  color: var(--color-brown-dark);
+}
+
+.reference-list a:hover::after {
+  transform: scaleX(1);
+}
+
+.results-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.results-card-title-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top left,
+              rgba(189, 217, 80, 0.95),
+              rgba(242, 100, 0, 0.8));
+  color: #111827;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  animation: pulse-soft 1.8s ease-in-out infinite;
+}
+
+.results-card-title-icon i {
+  font-size: 1.25rem;
+}
+/* Fin de referencias */
+
+
+
+/* Variante para la card de nutrientes */
+.results-card-title-icon-nutrients {
+  background: radial-gradient(circle at top left,
+              rgba(244, 45, 68, 0.95),
+              rgba(189, 217, 80, 0.85));
+}
+
+/* Encabezado de las tablas de Desayuno/Comida/Cena con iconito */
+.results-table-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.results-table-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+  animation: float 3s ease-in-out infinite; /* reutilizamos la animación float */
+}
+
+.results-table-icon i {
+  font-size: 1.05rem;
+}
+
+/* Diferentes tonos en cada comida */
+.results-table-icon-desayuno {
+  background: linear-gradient(135deg, #fde68a, #f97316);
+}
+
+.results-table-icon-comida {
+  background: linear-gradient(135deg, #bbf7d0, #22c55e);
+}
+
+.results-table-icon-cena {
+  background: linear-gradient(135deg, #bfdbfe, #4f46e5);
+  color: #0f172a;
+}
+
+/* amimacion suave para iconos redondos */
+@keyframes pulse-soft {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+  }
+}
+/* Icono  tabla de resumen diario */
+.results-table-icon-resumen {
+  background: linear-gradient(135deg, var(--color-lime), var(--color-orange));
+  color: #111827;
+}
+
+

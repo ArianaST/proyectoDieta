@@ -2,6 +2,8 @@ from typing import Dict, Any, List, Optional, Tuple
 import pandas as pd
 from dataclasses import dataclass, field
 import copy
+import random
+from math import exp
 from .catalogo import Platillo, _catalogo_dummy, _extiende_catalogo
 
 # ------------------------------------------------------------
@@ -189,10 +191,51 @@ class Menu:
     total_prot: float = 0.0
     total_lip: float = 0.0
     total_carb: float = 0.0
+    total_costo: float = 0.0
 
 # ------------------------------------------------------------
-#   "CSP" muy simple: búsqueda de una combinación factible
+#   "CSP": búsqueda de una combinación factible
 # ------------------------------------------------------------
+
+
+def _genera_plan_alimenticio(
+    dias: int,
+    min_cal: float,
+    max_cal: float,
+    min_prot: float,
+    max_prot: float,
+    min_lip: float,
+    max_lip: float,
+    min_carb: float,
+    max_carb: float,
+    catalogo: Dict[str, List[Platillo]],
+) -> Optional[Menu]:
+    """
+    Genera un plan alimenticio para el número de días indicado,
+    devolviendo None si no es posible.
+    """
+    plan_alimenticio : List[Menu] = []
+
+    for _ in range(dias):
+        menu_dia = _buscar_menu_un_dia(
+            min_cal,
+            max_cal,
+            min_prot,
+            max_prot,
+            min_lip,
+            max_lip,
+            min_carb,
+            max_carb,
+            copy.deepcopy(catalogo)
+        )
+
+        if menu_dia is None:
+            return None
+
+        plan_alimenticio.append(menu_dia)
+
+    return plan_alimenticio
+
 
 def _buscar_menu_un_dia(
     min_cal: float,
@@ -246,7 +289,7 @@ def backtrack(problema_menu: ProblemaMenu, menu: Menu) -> bool:
     Algoritmo forward checking con backtracking para encontrar una solución al problema del menú diario.
     Devuelve True si se encuentra una solución, False en caso contrario.
 
-    Esta implementación ocupa las heurísticas MRV, LCV y consistencia de arcos.
+    Esta implementación ocupa las heurísticas MRV y consistencia de arcos.
     Este metodo esta basado en el algoritmo descrito en el libro "Artificial Intelligence: A Modern Approach"
     de Stuart Russell y Peter Norvig, 3ta edicion.
     """
@@ -256,7 +299,7 @@ def backtrack(problema_menu: ProblemaMenu, menu: Menu) -> bool:
     menu_copia : Menu
     
     # Si el problema ya se resolvió, regresamos True
-    if _es_solucion(problema_menu, menu):
+    if es_solucion(problema_menu, menu):
         return True
 
     variable : str = _elige_variable(problema_menu.catalogo)
@@ -300,19 +343,25 @@ def _elige_variable(catalogo: Dict[str, List[Platillo]]) -> str:
     return variable_seleccionada
 
 def _ordena_valores(platillos : List[Platillo]) -> List[Platillo]:
+    """
+    Ordena los valores (platillos) para la variable.
+    En esta implementación se mezclan aleatoriamente; de esta forma
+    podemos obtener diferentes soluciones en diferentes ejecuciones.
+    """
+    random.shuffle(platillos)
     return platillos
 
-def _es_solucion(problema_menu: ProblemaMenu, menu: Menu) -> bool:
+def es_solucion(problema_menu: ProblemaMenu, menu: Menu) -> bool:
     """
     Verifica si el menú actual es una solución válida.
     """
     return "desayuno" in menu.platillos and \
            "comida" in menu.platillos and \
            "cena" in menu.platillos and \
+           problema_menu.min_cal <= menu.total_cal <= problema_menu.max_cal and \
            problema_menu.min_prot <= menu.total_prot <= problema_menu.max_prot and \
            problema_menu.min_lip <= menu.total_lip <= problema_menu.max_lip and \
            problema_menu.min_carb <= menu.total_carb <= problema_menu.max_carb
-           #problema_menu.min_cal <= menu.total_cal <= problema_menu.max_cal and \
 
 def _genera_consistencia_de_arcos(problema_menu: ProblemaMenu, menu: Menu) -> None:
     """
@@ -345,6 +394,7 @@ def _asignar_valor(
     menu.total_prot += valor["proteina"]
     menu.total_lip += valor["lipidos"]
     menu.total_carb += valor["carbohidratos"]
+    menu.total_costo += valor["costo"]
     # Removemos el valor del dominio de la variable
     del problema_menu.catalogo[variable]
 
@@ -363,6 +413,108 @@ def _restaurar_estado(
     menu.total_prot = menu_copia.total_prot
     menu.total_lip = menu_copia.total_lip
     menu.total_carb = menu_copia.total_carb
+    menu.total_costo = menu_copia.total_costo
+
+
+# ------------------------------------------------------------
+#   Recocido Simulado para mejorar la solución inicial
+# ------------------------------------------------------------
+
+def funcion_de_temperatura(tiempo :float) -> float:
+    """
+    Función dummy para simular la función de temperatura en el recocido simulado.
+    """
+    return 10000 * (0.95 ** tiempo)
+
+
+def genera_nuevo_estado(problema_menu : ProblemaMenu, plan_alimenticio: List[Menu]) -> Optional[List[Menu]]:
+    """
+    Función para generar un nuevo estado vecino del plan alimenticio actual.
+    Cambia únicamente el platillo de una comida de un día específico de manera aleatoria.
+    """
+    nuevo_plan : List[Menu] = copy.deepcopy(plan_alimenticio)
+    
+    dia_aleatorio = random.randint(0, len(nuevo_plan) - 1)
+    comida_aleatoria = random.choice(["desayuno", "comida", "cena"])
+    platillos_disponibles = problema_menu.catalogo[comida_aleatoria]
+    platillo_nuevo = random.choice(platillos_disponibles)
+    platillo_viejo = nuevo_plan[dia_aleatorio].platillos[comida_aleatoria]
+    nuevo_plan[dia_aleatorio].total_cal += platillo_nuevo["calorias"] - platillo_viejo["calorias"]
+    nuevo_plan[dia_aleatorio].total_prot += platillo_nuevo["proteina"] - platillo_viejo["proteina"]
+    nuevo_plan[dia_aleatorio].total_lip += platillo_nuevo["lipidos"] - platillo_viejo["lipidos"]
+    nuevo_plan[dia_aleatorio].total_carb += platillo_nuevo["carbohidratos"] - platillo_viejo["carbohidratos"]
+    nuevo_plan[dia_aleatorio].total_costo += platillo_nuevo["costo"] - platillo_viejo["costo"]
+    nuevo_plan[dia_aleatorio].platillos[comida_aleatoria] = platillo_nuevo
+
+    if not es_solucion(problema_menu, nuevo_plan[dia_aleatorio]):
+        return None
+
+    return nuevo_plan
+
+
+def costo(plan_alimenticio: List[Menu]) -> float:
+    """
+    Función para calcular el costo total del plan alimenticio.
+    El costo es la suma del costo total de cada menú diario en el plan más
+    1000 * el número de repeticiones de platillos.
+    De esta forma, se penalizan los planes que repiten platillos, como el rango de precios ronda
+    a los 100 pesos por día, se penaliza fuertemente la repetición de platillos, pero para 
+    planes alimenticios de muchos días, se permite cierta repetición.
+    """
+    costo_total = 0.0
+    for menu in plan_alimenticio:
+        costo_total += menu.total_costo
+    return costo_total + 1000 * contar_repeticiones(plan_alimenticio)
+
+
+def contar_repeticiones(plan_alimenticio: List[Menu]) -> int:
+    """
+    Función para contar el número de repeticiones de platillos en el plan alimenticio.
+    """
+    contador_platillos : Dict[str, int] = {}
+    for menu in plan_alimenticio:
+        for comida in ["desayuno", "comida", "cena"]:
+            platillo_nombre = menu.platillos[comida]["nombre"]
+            if platillo_nombre in contador_platillos:
+                contador_platillos[platillo_nombre] += 1
+            else:
+                contador_platillos[platillo_nombre] = 1
+
+    repeticiones = 0
+    for nombre, cuenta in contador_platillos.items():
+        if cuenta > 1:
+            repeticiones += cuenta - 1
+
+    return repeticiones
+
+
+def aplicar_recocido(problema_menu: ProblemaMenu, plan_alimenticio: List[Menu]) -> List[Menu]:
+    """
+    Función dummy para simular el recocido simulado.
+    Aún no implementada.
+    """
+    it_maximas : int = 10000000
+    tiempo : int = 0
+    delta : int = 0
+    temp : float = funcion_de_temperatura(tiempo)
+    while tiempo < it_maximas and temp > 1e-6:
+        
+        # Generamos un nuevo estado vecino de manera aleatoria
+        siguiente_estado : Optional[List[Menu]] = genera_nuevo_estado(problema_menu, plan_alimenticio)
+
+        # Si el siguiente estado generado no es una solución valida, se descarta
+        if siguiente_estado is None:
+            continue
+
+        delta = costo(siguiente_estado) - costo(plan_alimenticio)
+
+        if delta <= 0 or random.random() < exp(-delta / temp):
+            plan_alimenticio = siguiente_estado
+
+        tiempo += 1
+        temp = funcion_de_temperatura(tiempo)
+
+    return plan_alimenticio
 
 
 
@@ -410,11 +562,12 @@ def resolver_csp(parametros: Dict[str, Any], df_bd: pd.DataFrame) -> Dict[str, A
     catalogo = _extiende_catalogo(_catalogo_dummy())
 
     # 3) Resolver el CSP simplificado para UN día
-    solucion_menu = _buscar_menu_un_dia(min_cal, max_cal, min_prot, max_prot, min_lip, max_lip, min_carb, max_carb, catalogo)
+    #solucion_menu = _buscar_menu_un_dia(min_cal, max_cal, min_prot, max_prot, min_lip, max_lip, min_carb, max_carb, catalogo)
+    plan_alimenticio : Optional[List[Menu]] = _genera_plan_alimenticio(dias, min_cal, max_cal, min_prot, max_prot, min_lip, max_lip, min_carb, max_carb, catalogo)
 
     plan: List[Dict[str, Any]] = []
 
-    if solucion_menu is None:
+    if plan_alimenticio is None:
         # No se encontró menú que cumpla los mínimos
         mensaje = "No se encontró ningún menú que cumpla los mínimos con el catálogo actual."
         for d in range(1, dias + 1):
@@ -425,46 +578,28 @@ def resolver_csp(parametros: Dict[str, Any], df_bd: pd.DataFrame) -> Dict[str, A
                 }
             )
 
-        resumen: Dict[str, Any] = {
-            "mensaje": mensaje,
-            "dias": dias,
-            "peso_kg": peso_kg,
-            "altura_cm": altura_cm,
-            "genero": genero,
-            "edad_anios": edad_anios,
-            "imc": round(imc, 2) if imc is not None else None,
-            "imc_texto": (
-                f"IMC calculado: {imc:.2f}" if imc is not None else "IMC no disponible"
-            ),
-            "calorias_min": round(min_cal, 1),
-            "calorias_max": round(max_cal, 1),
-            "proteina_min": round(min_prot, 1),
-            "proteina_max": round(max_prot, 1),
-            "carbohidratos_min": round(min_carb, 1),
-            "carbohidratos_max": round(max_carb, 1),
-            "lipidos_min": round(min_lip, 1),
-            "lipidos_max": round(max_lip, 1),
-            "exito": False,
-        }
+        resumen = _resumen(mensaje, dias, peso_kg, altura_cm, genero, edad_anios, imc, min_cal, max_cal, min_prot, max_prot, min_carb, max_carb, min_lip, max_lip, False)
         return {"plan": plan, "resumen": resumen}
 
-    # 4) Hubo solución: armamos descripción amigable
-    d_plato = solucion_menu.platillos["desayuno"]
-    c_plato = solucion_menu.platillos["comida"]
-    ce_plato = solucion_menu.platillos["cena"]
-    total_cal = solucion_menu.total_cal
-    total_prot = solucion_menu.total_prot
-    total_carb = solucion_menu.total_carb
-    total_lip = solucion_menu.total_lip
-
-    desc_base = (
-        f"Desayuno: {d_plato['nombre']} | "
-        f"Comida: {c_plato['nombre']} | "
-        f"Cena: {ce_plato['nombre']} "
-        f"(≈ {total_cal:.0f} kcal, {total_prot:.1f} g proteína, {total_carb:.1f} g carbohidratos, {total_lip:.1f} g lípidos)"
+    # 4) Hubo solución: armamos descripción amigable, entonces mejoramos la solución con recocido simulado
+    problema_menu : ProblemaMenu = ProblemaMenu(
+        catalogo=catalogo,
+        min_cal=min_cal,
+        max_cal=max_cal,
+        min_prot=min_prot,
+        max_prot=max_prot,
+        min_lip=min_lip,
+        max_lip=max_lip,
+        min_carb=min_carb,
+        max_carb=max_carb
     )
+    plan_alimenticio = aplicar_recocido(problema_menu, plan_alimenticio)
+
+    mensaje = "CSP: se encontró un menú diario factible."
 
     for d in range(1, dias + 1):
+        desc_base = _plano_texto_compatible(plan_alimenticio[d - 1])
+        #desc_base = _plano_texto_compatible(solucion_menu)
         plan.append(
             {
                 "dia": d,
@@ -472,8 +607,45 @@ def resolver_csp(parametros: Dict[str, Any], df_bd: pd.DataFrame) -> Dict[str, A
             }
         )
 
-    resumen = {
-        "mensaje": "CSP etapa 1: se encontró un menú diario factible.",
+    resumen = _resumen(mensaje, dias, peso_kg, altura_cm, genero, edad_anios, imc, min_cal, max_cal, min_prot, max_prot, min_carb, max_carb, min_lip, max_lip, True)
+    return {"plan": plan, "resumen": resumen}
+
+
+
+def _plano_texto_compatible(menu: Menu) -> str:
+    """
+    Genera una descripción texto-compatible del menú.
+    """
+    d_plato = menu.platillos["desayuno"]
+    c_plato = menu.platillos["comida"]
+    ce_plato = menu.platillos["cena"]
+    total_cal = menu.total_cal
+    total_prot = menu.total_prot
+    total_carb = menu.total_carb
+    total_lip = menu.total_lip
+    total_costo = menu.total_costo
+
+    descripcion = (
+        f"Desayuno: {d_plato['nombre']} | "
+        f"Comida: {c_plato['nombre']} | "
+        f"Cena: {ce_plato['nombre']} "
+        f"(≈ {total_cal:.0f} kcal, {total_prot:.1f} g proteína, {total_carb:.1f} g carbohidratos, {total_lip:.1f} g lípidos, COSTO: ${total_costo:.1f})"
+    )
+    return descripcion
+
+
+
+def _resumen(
+    mensaje: str, dias: int, peso_kg: float, altura_cm: float, genero: str,
+    edad_anios: float, imc: Optional[float], min_cal: float, max_cal: float,
+    min_prot: float, max_prot: float, min_carb: float, max_carb: float,
+    min_lip: float, max_lip: float, exito: bool
+) -> Dict[str, Any]:
+    """
+    Genera el resumen de resultados.
+    """
+    resumen: Dict[str, Any] = {
+        "mensaje": mensaje,
         "dias": dias,
         "peso_kg": peso_kg,
         "altura_cm": altura_cm,
@@ -491,31 +663,6 @@ def resolver_csp(parametros: Dict[str, Any], df_bd: pd.DataFrame) -> Dict[str, A
         "carbohidratos_max": round(max_carb, 1),
         "lipidos_min": round(min_lip, 1),
         "lipidos_max": round(max_lip, 1),
-        "exito": True,
+        "exito": exito,
     }
-
-    return {"plan": plan, "resumen": resumen}
-
-
-# c = _extiende_catalogo(_catalogo_dummy())
-# print(len(c['desayuno']))
-
-# cal_min = calorias_minimas(90, 190, 24, "Masculino")
-# cal_max = calorias_max(90, 190, 24, "Masculino")
-
-# prot_min = proteina_minima(90, 24, "Masculino")
-# prot_max = proteina_max(90, 24, "Masculino")
-
-# lip_min = lipidos_min(cal_min)
-# lip_max = lipidos_max(cal_max)
-
-# carb_min = carbohidratos_min(cal_min)
-# carb_max = carbohidratos_max(cal_max)
-
-# print(f"Calorías mínimas: {cal_min}, máximas: {cal_max}")
-# print(f"Proteína mínimas: {prot_min}, máximas: {prot_max}")
-# print(f"Lípidos mínimas: {lip_min}, máximas: {lip_max}")
-# print(f"Carbohidratos mínimas: {carb_min}, máximas: {carb_max}")
-
-# m =_buscar_menu_un_dia(cal_min, cal_max, prot_min, prot_max, lip_min, lip_max, carb_min, carb_max, c)
-# print(m)
+    return resumen

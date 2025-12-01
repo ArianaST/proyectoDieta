@@ -1,17 +1,16 @@
 <!-- app/templates/index.html -->
- {% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Diseña tu plan de dieta{% endblock %}
 
 {% block content %}
 <div class="form-page">
   <div class="form-card">
-    <h1 class="mb-3 form-title">Diseña tu plan de dieta (DEMO)</h1>
+    <h1 class="mb-3 form-title">¡Bienvenido al IATACATE!</h1>
+    <h1 class="mb-3 form-title">Diseña tu plan de dieta</h1>
 
     <p class="text-muted mb-4">
-      Esta versión usa tus datos (días, peso, altura, género y edad) para calcular el IMC
-      y generar un plan de prueba. En versiones futuras se integrarán tus preferencias,
-      presupuesto y platillos regionales.
+      Rellena los datos siguientes para calcular tu IMC y generar un plan de dieta que se ajuste a ti.
     </p>
 
     <form id="form-plan" method="POST" action="{{ url_for('loading') }}" class="row g-3">
@@ -19,43 +18,115 @@
       <!-- Días -->
       <div class="col-md-4">
         <label for="dias" class="form-label">Días del plan</label>
-        <input type="number" id="dias" name="dias" class="form-control"
-               min="1" max="14" value="7">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-calendar3"></i>
+          </span>
+          <input
+            type="number"
+            id="dias"
+            name="dias"
+            class="form-control"
+            min="1"
+            max="14"
+            placeholder="Ej. 7"
+            required
+            oninvalid="this.setCustomValidity('No se puede dejar vacío')"
+            oninput="this.setCustomValidity('')"
+          >
+        </div>
       </div>
 
       <!-- Peso -->
       <div class="col-md-4">
         <label for="peso_kg" class="form-label">Peso (kg)</label>
-        <input type="number" step="0.1" id="peso_kg" name="peso_kg"
-               class="form-control" value="70">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-speedometer2"></i>
+          </span>
+          <input
+            type="number"
+            step="0.1"
+            id="peso_kg"
+            name="peso_kg"
+            class="form-control"
+            placeholder="Ej. 70.5"
+            required
+            oninvalid="this.setCustomValidity('No se puede dejar vacío')"
+            oninput="this.setCustomValidity('')"
+          >
+        </div>
       </div>
 
       <!-- Altura -->
       <div class="col-md-4">
         <label for="altura_cm" class="form-label">Altura (cm)</label>
-        <input type="number" step="1" id="altura_cm" name="altura_cm"
-               class="form-control" value="170">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-rulers"></i>
+          </span>
+          <input
+            type="number"
+            step="1"
+            id="altura_cm"
+            name="altura_cm"
+            class="form-control"
+            placeholder="Ej. 170"
+            required
+            oninvalid="this.setCustomValidity('No se puede dejar vacío')"
+            oninput="this.setCustomValidity('')"
+          >
+        </div>
       </div>
 
       <!-- Género -->
       <div class="col-md-4">
         <label for="genero" class="form-label">Género</label>
-        <select id="genero" name="genero" class="form-select">
-          <option value="femenino">Femenino</option>
-          <option value="masculino">Masculino</option>
-          <option value="otro">Otro / Prefiero no decir</option>
-        </select>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-gender-ambiguous"></i>
+          </span>
+          <select
+            id="genero"
+            name="genero"
+            class="form-select"
+            required
+            oninvalid="this.setCustomValidity('No se puede dejar vacío')"
+            oninput="this.setCustomValidity('')"
+          >
+            <option value="" selected disabled>Selecciona tu género</option>
+            <option value="femenino">Femenino</option>
+            <option value="masculino">Masculino</option>
+            <option value="otro">Otro / Prefiero no decir</option>
+          </select>
+        </div>
       </div>
-	  
+
+      <!-- Edad -->
       <div class="col-md-4">
         <label for="edad_anios" class="form-label">Edad</label>
-        <input type="number" id="edad_anios" name="edad_anios"
-               class="form-control" min="5" max="120" value="23">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-person-badge"></i>
+          </span>
+          <input
+            type="number"
+            id="edad_anios"
+            name="edad_anios"
+            class="form-control"
+            min="5"
+            max="120"
+            placeholder="Ej. 23"
+            required
+            oninvalid="this.setCustomValidity('No se puede dejar vacío')"
+            oninput="this.setCustomValidity('')"
+          >
+        </div>
       </div>
 
       <div class="col-12 mt-3">
         <button id="btn-generar" type="submit" class="btn btn-primary">
-          Generar plan DEMO
+          Generar plan
         </button>
       </div>
 

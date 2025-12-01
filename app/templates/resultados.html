@@ -1,96 +1,305 @@
 {% extends "base.html" %}
 
-{% block title %}Resultados - Plan DEMO{% endblock %}
+{% block title %}Resultados - Plan de dieta{% endblock %}
 
 {% block content %}
-<h1 class="mb-3">Resultados del plan (DEMO)</h1>
-
-<div class="row">
-  <!-- Datos del paciente -->
-  <div class="col-md-6">
-    <h4>Datos del paciente</h4>
-    <ul>
-      <li><strong>Días:</strong> {{ resumen.dias }}</li>
-      <li><strong>Peso (kg):</strong> {{ resumen.peso_kg }}</li>
-      <li><strong>Altura (cm):</strong> {{ resumen.altura_cm }}</li>
-      <li><strong>Género:</strong> {{ resumen.genero }}</li>
-	  <li><strong>Edad:</strong> {{ resumen.edad_anios }}</li>
-      <li>
-        <strong>IMC calculado:</strong>
-        {% if resumen.imc is not none %}
-          {{ resumen.imc }}
-        {% else %}
-          No disponible
-        {% endif %}
-      </li>
-    </ul>
+<div class="results-page">
+  <div class="results-header">
+    <h1 class="mb-1">Resultados de tu plan de dieta personalizado</h1>
+    <p class="results-tagline">
+      Plan generado a partir de tus datos iniciales y los rangos recomendados de nutrientes.
+    </p>
   </div>
 
-  <!-- Consumo recomendado de nutrientes -->
-  <div class="col-md-6">
-    <h4>Consumo recomendado diario (nutrientes)</h4>
-    <table class="table table-sm">
+  <div class="row g-4">
+    <!-- Datos del paciente -->
+    <div class="col-md-6">
+      <div class="results-card">
+        <div class="results-card-title">
+          <div class="results-card-title-icon">
+            <i class="bi bi-person-vcard"></i>
+          </div>
+          <div>
+            <h4 class="mb-0">Datos del paciente</h4>
+            <small class="text-muted">Información de entrada</small>
+          </div>
+        </div>
+
+        <ul class="list-unstyled mt-3">
+          <li><strong>Días:</strong> {{ resumen.dias }}</li>
+          <li><strong>Peso (kg):</strong> {{ resumen.peso_kg }}</li>
+          <li><strong>Altura (cm):</strong> {{ resumen.altura_cm }}</li>
+          <li><strong>Género:</strong> {{ resumen.genero }}</li>
+          <li><strong>Edad:</strong> {{ resumen.edad_anios }}</li>
+          <li>
+            <strong>IMC calculado:</strong>
+            {% if resumen.imc is not none %}
+              {{ resumen.imc }}
+            {% else %}
+              No disponible
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Consumo recomendado de nutrientes -->
+    <div class="col-md-6">
+      <div class="results-card">
+        <div class="results-card-title">
+          <div class="results-card-title-icon results-card-title-icon-nutrients">
+            <i class="bi bi-heart-pulse"></i>
+          </div>
+          <div>
+            <h4 class="mb-0">Consumo recomendado diario (nutrientes)</h4>
+            <small class="text-muted">Rangos estimados</small>
+          </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="table table-sm results-table mb-0">
+            <thead>
+              <tr>
+                <th>Nutriente</th>
+                <th>Mínimo</th>
+                <th>Máximo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Calorías (kcal)</td>
+                <td>{{ resumen.calorias_min }}</td>
+                <td>{{ resumen.calorias_max }}</td>
+              </tr>
+              <tr>
+                <td>Proteína (g)</td>
+                <td>{{ resumen.proteina_min }}</td>
+                <td>{{ resumen.proteina_max }}</td>
+              </tr>
+              <tr>
+                <td>Lípidos (g)</td>
+                <td>{{ resumen.lipidos_min }}</td>
+                <td>{{ resumen.lipidos_max }}</td>
+              </tr>
+              <tr>
+                <td>Carbohidratos (g)</td>
+                <td>{{ resumen.carbohidratos_min }}</td>
+                <td>{{ resumen.carbohidratos_max }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <!-- TABLAS SEPARADAS: DESAYUNO, COMIDA, CENA USANDO JINJA -->
+  <div class="row g-4">
+    <!-- Desayuno -->
+    <div class="col-md-4">
+      <div class="results-table-wrapper">
+        <div class="results-table-title">
+          <div class="results-table-icon results-table-icon-desayuno">
+            <i class="bi bi-sunrise"></i>
+          </div>
+          <h4 class="mb-0">Desayuno</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle results-table mb-0">
+            <thead>
+              <tr>
+                <th>Día</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for fila in plan %}
+                {% set partes = fila.descripcion.split('|') %}
+                <tr>
+                  <td>{{ fila.dia }}</td>
+                  <td>
+                    {% if partes|length > 0 %}
+                      {{ partes[0]|replace('Desayuno:', '')|trim }}
+                    {% else %}
+                      {{ fila.descripcion }}
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comida -->
+    <div class="col-md-4">
+      <div class="results-table-wrapper">
+        <div class="results-table-title">
+          <div class="results-table-icon results-table-icon-comida">
+            <i class="bi bi-emoji-smile"></i>
+          </div>
+          <h4 class="mb-0">Comida</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle results-table mb-0">
+            <thead>
+              <tr>
+                <th>Día</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for fila in plan %}
+                {% set partes = fila.descripcion.split('|') %}
+                <tr>
+                  <td>{{ fila.dia }}</td>
+                  <td>
+                    {% if partes|length > 1 %}
+                      {{ partes[1]|replace('Comida:', '')|trim }}
+                    {% else %}
+                      {{ fila.descripcion }}
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+       <!-- Cena -->
+<div class="col-md-4">
+  <div class="results-table-wrapper">
+    <div class="results-table-title">
+      <div class="results-table-icon results-table-icon-cena">
+        <i class="bi bi-moon-stars"></i>
+      </div>
+      <h4 class="mb-0">Cena</h4>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped align-middle results-table mb-0">
+        <thead>
+          <tr>
+            <th>Día</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+               <tbody>
+          {% for fila in plan %}
+            {% set partes = fila.descripcion.split('|') %}
+            {# Obtenemos el nombre del platillo de la parte de Cena #}
+            {% if partes|length > 2 %}
+              {% set cena_raw = partes[2]|replace('Cena:', '')|trim %}
+              {% set pos_paren = cena_raw.find('(') %}
+              {% if pos_paren != -1 %}
+                {% set cena_nombre = cena_raw[:pos_paren]|trim %}
+              {% else %}
+                {% set cena_nombre = cena_raw %}
+              {% endif %}
+            {% else %}
+              {% set cena_nombre = fila.descripcion %}
+            {% endif %}
+            <tr>
+              <td>{{ fila.dia }}</td>
+              <td>{{ cena_nombre }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--  TABLA: CALORÍAS Y COSTO -->
+<div class="results-table-wrapper mt-2">
+  <div class="results-table-title">
+    <div class="results-table-icon results-table-icon-resumen">
+      <i class="bi bi-clipboard-data"></i>
+    </div>
+    <h4 class="mb-0">Resumen diario: calorías, macros y costo</h4>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle results-table mb-0">
       <thead>
         <tr>
-          <th>Nutriente</th>
-          <th>Mínimo</th>
-          <th>Máximo</th>
+          <th>Día</th>
+          <th>Calorías totales (kcal)</th>
+          <th>Proteína (g)</th>
+          <th>Carbohidratos (g)</th>
+          <th>Lípidos (g)</th>
+          <th>Costo aproximado</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Calorías (kcal)</td>
-          <td>{{ resumen.calorias_min }}</td>
-          <td>{{ resumen.calorias_max }}</td>
-        </tr>
-        <tr>
-          <td>Proteína (g)</td>
-          <td>{{ resumen.proteina_min }}</td>
-          <td>{{ resumen.proteina_max }}</td>
-        </tr>
-        <tr>
-          <td>Lípidos (g)</td>
-          <td>{{ resumen.lipidos_min }}</td>
-          <td>{{ resumen.lipidos_max }}</td>
-        </tr>
-        <tr>
-          <td>Carbohidratos (g)</td>
-          <td>{{ resumen.carbohidratos_min }}</td>
-          <td>{{ resumen.carbohidratos_max }}</td>
-        </tr>
+        {% for fila in plan %}
+          {% set desc = fila.descripcion %}
+
+          {# Bloque dentro de paréntesis, sin COSTO #}
+          {% set token_start = '(≈ ' %}
+          {% set token_cost  = ', COSTO: $' %}
+          {% set pos_start = desc.find(token_start) %}
+          {% set pos_cost_label = desc.find(token_cost) %}
+
+          {% if pos_start != -1 and pos_cost_label != -1 %}
+            {# Ejemplo dentro: "1800 kcal, 70.0 g proteína, 190.0 g carbohidratos, 60.0 g lípidos" #}
+            {% set dentro = desc[pos_start + token_start|length : pos_cost_label] %}
+            {% set partes_macro = dentro.split(',') %}
+
+            {% if partes_macro|length >= 4 %}
+              {% set kcal_seg = partes_macro[0]|trim %}
+              {% set prot_seg = partes_macro[1]|trim %}
+              {% set carb_seg = partes_macro[2]|trim %}
+              {% set lip_seg  = partes_macro[3]|trim %}
+
+              {# Nos quedamos solo con el número antes del espacio #}
+              {% set kcal_str = kcal_seg.split(' ')[0] %}
+              {% set prot_str = prot_seg.split(' ')[0] %}
+              {% set carb_str = carb_seg.split(' ')[0] %}
+              {% set lip_str  = lip_seg.split(' ')[0] %}
+            {% else %}
+              {% set kcal_str = 'N/D' %}
+              {% set prot_str = 'N/D' %}
+              {% set carb_str = 'N/D' %}
+              {% set lip_str  = 'N/D' %}
+            {% endif %}
+          {% else %}
+            {% set kcal_str = 'N/D' %}
+            {% set prot_str = 'N/D' %}
+            {% set carb_str = 'N/D' %}
+            {% set lip_str  = 'N/D' %}
+          {% endif %}
+
+          {# Costo: después de "COSTO: $" y antes de ")" #}
+          {% set pos_cost = desc.find('COSTO: $') %}
+          {% set pos_paren_end = desc.rfind(')') %}
+          {% if pos_cost != -1 and pos_paren_end != -1 %}
+            {% set costo_str = desc[pos_cost + 8 : pos_paren_end] %}
+          {% else %}
+            {% set costo_str = 'N/D' %}
+          {% endif %}
+
+          <tr>
+            <td>{{ fila.dia }}</td>
+            <td>{{ kcal_str }}</td>
+            <td>{{ prot_str }}</td>
+            <td>{{ carb_str }}</td>
+            <td>{{ lip_str }}</td>
+            <td>${{ costo_str }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
-
-<hr>
-
-<h4>Plan (solo demo)</h4>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Día</th>
-      <th>Descripción</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for fila in plan %}
-    <tr>
-      <td>{{ fila.dia }}</td>
-      <td>{{ fila.descripcion }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<p class="mt-2">
+   <p class="results-disclaimer">
       Si usted se encuentra en período de embarazo o lactancia, es atleta de alto rendimiento o padece una enfermedad metabólica
       (diabetes, insuficiencia renal u obesidad mórbida), el calculador de nutrientes diarios puede subestimar o sobrestimar sus
       necesidad de consumo enérgico y proteínico. <br>
 	  <br>
-      <em>* Consulta a tu médico. Esta información es una guía que pretende ser un punto de referencia, las acciones que se tomen
-      con base en esta información son responsabilidad de quien las efectue.</em>
     </p>
-
-<a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Volver</a>
 {% endblock %}

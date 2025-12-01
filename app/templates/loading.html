@@ -20,10 +20,6 @@
     <div class="loading-dots mb-2">
       <span></span><span></span><span></span>
     </div>
-
-    <p class="small text-secondary">
-      Esta es una versión demo.
-    </p>
   </div>
 
   <!-- Formulario oculto que se enviará automáticamente a /plan -->
@@ -32,6 +28,7 @@
     <input type="hidden" name="peso_kg" value="{{ parametros.peso_kg }}">
     <input type="hidden" name="altura_cm" value="{{ parametros.altura_cm }}">
     <input type="hidden" name="genero" value="{{ parametros.genero }}">
+    <input type="hidden" name="edad_anios" value=" {{parametros.edad_anios }}">
   </form>
 </div>
 {% endblock %}
