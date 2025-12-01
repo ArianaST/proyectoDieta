@@ -20,25 +20,25 @@ class Platillo(Dict[str, Any]):
 def _catalogo_dummy() -> Dict[str, List[Platillo]]:
     desayunos: List[Platillo] = [
         # --- ORIGINALES (4) ---
-        {"tipo": "desayuno", "nombre": "Avena con leche y plátano",         "calorias": 350.0, "proteina": 14.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
-        {"tipo": "desayuno", "nombre": "Huevos con frijoles y tortilla",    "calorias": 420.0, "proteina": 22.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
-        {"tipo": "desayuno", "nombre": "Yogur con fruta y granola",         "calorias": 320.0, "proteina": 12.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
-        {"tipo": "desayuno", "nombre": "Molletes de frijol con queso",      "calorias": 450.0, "proteina": 18.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
+             {"tipo": "desayuno", "nombre": "1 Taza de Avena con leche y plátano (2 pzas)",         "calorias": 350.0, "proteina": 14.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con frijoles y tortilla (3 pzas)",    "calorias": 420.0, "proteina": 22.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
+        {"tipo": "desayuno", "nombre": "1 Taza Yogur con fruta de temporada y granola",         "calorias": 320.0, "proteina": 12.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
+        {"tipo": "desayuno", "nombre": "2 Molletes de frijol con queso fresco",        "calorias": 450.0, "proteina": 18.0, "lipidos": 38.0, "carbohidratos": 158.0, "costo": 15.0},
 
         # --- NUEVOS (30) (Precios restaurados a la referencia del usuario) ---
-        {"tipo": "desayuno", "nombre": "Huevo a la mexicana con 2 tortillas y papaya", "calorias": 348.0, "proteina": 15.6, "lipidos": 12.4, "carbohidratos": 43.9, "costo": 75.0},
-        {"tipo": "desayuno", "nombre": "Huevo con ejotes, 2 tortillas y melón",        "calorias": 356.0, "proteina": 15.8, "lipidos": 12.9, "carbohidratos": 45.0, "costo": 75.0},
-        {"tipo": "desayuno", "nombre": "Huevo con salsa roja, 2 tortillas y manzana",  "calorias": 348.0, "proteina": 15.0, "lipidos": 12.5, "carbohidratos": 44.9, "costo": 75.0},
-        {"tipo": "desayuno", "nombre": "Huevo con verdura, 2 tortillas y pera",        "calorias": 354.0, "proteina": 16.3, "lipidos": 12.6, "carbohidratos": 44.8, "costo": 75.0},
-        {"tipo": "desayuno", "nombre": "Huevo con queso panela y 1 bolillo",           "calorias": 370.5, "proteina": 21.5, "lipidos": 13.8, "carbohidratos": 38.4, "costo": 82.0},
-        {"tipo": "desayuno", "nombre": "Huevo con chorizo y 2 tortillas",              "calorias": 364.2, "proteina": 18.5, "lipidos": 19.7, "carbohidratos": 27.2, "costo": 90.0},
-        {"tipo": "desayuno", "nombre": "Huevo con jamón, 2 tortillas y fruta",         "calorias": 395.0, "proteina": 19.0, "lipidos": 19.7, "carbohidratos": 42.0, "costo": 90.0},
-        {"tipo": "desayuno", "nombre": "Huevo con tocino y 2 tortillas",               "calorias": 364.2, "proteina": 18.5, "lipidos": 19.7, "carbohidratos": 27.2, "costo": 90.0},
-        {"tipo": "desayuno", "nombre": "Huevo con salchicha, 2 tortillas y té",        "calorias": 364.2, "proteina": 18.5, "lipidos": 19.7, "carbohidratos": 27.2, "costo": 82.0},
-        {"tipo": "desayuno", "nombre": "Huevo con frijoles y pan tostado (2)",         "calorias": 376.2, "proteina": 20.5, "lipidos": 14.0, "carbohidratos": 43.0, "costo": 72.0},
-        {"tipo": "desayuno", "nombre": "Huevo revuelto con jamón y pan tostado",       "calorias": 350.0, "proteina": 19.0, "lipidos": 15.0, "carbohidratos": 30.0, "costo": 75.0},
-        {"tipo": "desayuno", "nombre": "Huevo ranchero (2 pzas) con fruta",            "calorias": 383.2, "proteina": 14.5, "lipidos": 18.9, "carbohidratos": 38.7, "costo": 88.0},
-        {"tipo": "desayuno", "nombre": "Huevo revuelto con tortilla (Migas) y fruta",  "calorias": 383.2, "proteina": 14.5, "lipidos": 18.9, "carbohidratos": 38.7, "costo": 78.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos a la mexicana con 2 tortillas y 1 taza papaya", "calorias": 348.0, "proteina": 15.6, "lipidos": 12.4, "carbohidratos": 43.9, "costo": 75.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con ejotes, 2 tortillas y 1 taza melón",        "calorias": 356.0, "proteina": 15.8, "lipidos": 12.9, "carbohidratos": 45.0, "costo": 75.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con salsa roja, 2 tortillas y manzana (1 pz)",  "calorias": 348.0, "proteina": 15.0, "lipidos": 12.5, "carbohidratos": 44.9, "costo": 75.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con verdura, 2 tortillas y pera (1 pz)",        "calorias": 354.0, "proteina": 16.3, "lipidos": 12.6, "carbohidratos": 44.8, "costo": 75.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con queso panela y 1 bolillo",           "calorias": 370.5, "proteina": 21.5, "lipidos": 13.8, "carbohidratos": 38.4, "costo": 82.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con chorizo y 2 tortillas",              "calorias": 364.2, "proteina": 18.5, "lipidos": 19.7, "carbohidratos": 27.2, "costo": 90.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con jamón, 2 tortillas y fruta",         "calorias": 395.0, "proteina": 19.0, "lipidos": 19.7, "carbohidratos": 42.0, "costo": 90.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con tocino y 2 tortillas",               "calorias": 364.2, "proteina": 18.5, "lipidos": 19.7, "carbohidratos": 27.2, "costo": 90.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con salchicha, 2 tortillas y té",        "calorias": 364.2, "proteina": 18.5, "lipidos": 19.7, "carbohidratos": 27.2, "costo": 82.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con con frijoles y pan tostado (2)",         "calorias": 376.2, "proteina": 20.5, "lipidos": 14.0, "carbohidratos": 43.0, "costo": 72.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con revuelto con jamón y pan tostado",       "calorias": 350.0, "proteina": 19.0, "lipidos": 15.0, "carbohidratos": 30.0, "costo": 75.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con ranchero (2 pzas) con fruta",            "calorias": 383.2, "proteina": 14.5, "lipidos": 18.9, "carbohidratos": 38.7, "costo": 88.0},
+        {"tipo": "desayuno", "nombre": "2 Huevos con revuelto con tortilla (Migas) y fruta",  "calorias": 383.2, "proteina": 14.5, "lipidos": 18.9, "carbohidratos": 38.7, "costo": 78.0},
         {"tipo": "desayuno", "nombre": "Tortilla española con ensalada y pan",         "calorias": 360.0, "proteina": 15.0, "lipidos": 19.0, "carbohidratos": 30.0, "costo": 75.0},
         {"tipo": "desayuno", "nombre": "Cereal con leche, plátano y almendras",        "calorias": 456.0, "proteina": 19.2, "lipidos": 18.6, "carbohidratos": 56.0, "costo": 60.0},
         {"tipo": "desayuno", "nombre": "Hot cakes (2) con leche y fresas",             "calorias": 458.0, "proteina": 14.0, "lipidos": 15.5, "carbohidratos": 72.7, "costo": 67.5},
@@ -56,6 +56,17 @@ def _catalogo_dummy() -> Dict[str, List[Platillo]]:
         {"tipo": "desayuno", "nombre": "Tacos de huevo (2) y fruta picada",            "calorias": 380.0, "proteina": 16.0, "lipidos": 14.0, "carbohidratos": 45.0, "costo": 75.0},
         {"tipo": "desayuno", "nombre": "Sándwich de jamón y queso con fruta",          "calorias": 420.0, "proteina": 20.0, "lipidos": 15.0, "carbohidratos": 50.0, "costo": 60.0},
         {"tipo": "desayuno", "nombre": "Quesadillas (2) con aguacate y salsa",         "calorias": 390.0, "proteina": 18.0, "lipidos": 18.0, "carbohidratos": 35.0, "costo": 60.0},
+        #NUEVAS IMSS
+        {"tipo": "desayuno", "nombre": "Avena cocida (1 taza) con leche descremada y 1 rebanada de pan tostado integral con 20 g de queso fresco", "calorias": 463.0, "proteina": 22.0, "lipidos": 15.0, "carbohidratos": 60.0, "costo": 45.0},
+        {"tipo": "desayuno", "nombre": "Calabacitas a la mexicana (1 taza) con huevo revuelto (1 pieza) y 1/2 taza de arándanos con 1/2 taza de yogur natural", "calorias": 478.0, "proteina": 24.0, "lipidos": 18.0, "carbohidratos": 55.0, "costo": 50.0},
+        {"tipo": "desayuno", "nombre": "Caldo tlalpeño (1 taza) con pollo y garbanzos y 1 naranja mediana en gajos", "calorias": 502.0, "proteina": 20.0, "lipidos": 18.0, "carbohidratos": 65.0, "costo": 52.0},
+        {"tipo": "desayuno", "nombre": "Carne de res en salsa pasilla (90 g) con 2 tortillas de maíz y 1 taza de papaya en cubos", "calorias": 524.0, "proteina": 26.0, "lipidos": 20.0, "carbohidratos": 60.0, "costo": 60.0},
+        {"tipo": "desayuno", "nombre": "Chayote al vapor con jamón de pavo y queso panela (1 taza en total) y 1 durazno mediano con 1/2 taza de yogur natural", "calorias": 480.0, "proteina": 24.0, "lipidos": 16.0, "carbohidratos": 60.0, "costo": 48.0},
+        {"tipo": "desayuno", "nombre": "Chilaquiles rojos con pollo deshebrado (1 taza) con 30 g de queso fresco y 1/2 taza de mango ataúlfo en cubos", "calorias": 512.0, "proteina": 22.0, "lipidos": 16.0, "carbohidratos": 70.0, "costo": 55.0},
+        {"tipo": "desayuno", "nombre": "Dobladitas de queso con flor de calabaza (2 piezas) y 1 taza de melón con 1/2 taza de yogur natural", "calorias": 500.0, "proteina": 25.0, "lipidos": 20.0, "carbohidratos": 55.0, "costo": 58.0},
+        {"tipo": "desayuno", "nombre": "Enchiladas de pollo (2 piezas) con salsa roja y 1 durazno mediano con 1/2 taza de yogur", "calorias": 514.0, "proteina": 23.0, "lipidos": 18.0, "carbohidratos": 65.0, "costo": 62.0},
+        {"tipo": "desayuno", "nombre": "Enfrijoladas de frijol negro (3 piezas) con queso fresco y 2 guayabas medianas", "calorias": 477.0, "proteina": 21.0, "lipidos": 17.0, "carbohidratos": 60.0, "costo": 50.0},
+        {"tipo": "desayuno", "nombre": "Flautas de pollo (3 piezas) horneadas y 1/2 taza de uvas rojas", "calorias": 509.0, "proteina": 24.0, "lipidos": 17.0, "carbohidratos": 65.0, "costo": 55.0},
     ]
 
     comidas: List[Platillo] = [
@@ -96,6 +107,18 @@ def _catalogo_dummy() -> Dict[str, List[Platillo]]:
         {"tipo": "comida", "nombre": "Arroz con pollo al horno y verduras al vapor",   "calorias": 550.0, "proteina": 25.0, "lipidos": 22.0, "carbohidratos": 65.0, "costo": 110.0},
         {"tipo": "comida", "nombre": "Caldo gallego con 2 piezas de pan",              "calorias": 658.0, "proteina": 40.0, "lipidos": 28.0, "carbohidratos": 60.0, "costo": 127.5},
         {"tipo": "comida", "nombre": "Fabada con porción de arroz",                    "calorias": 650.0, "proteina": 38.0, "lipidos": 30.0, "carbohidratos": 65.0, "costo": 145.0},
+        #NUEVAS IMSS
+        {"tipo": "comida", "nombre": "Albóndigas de pollo en caldillo de tomate (3 piezas, 120 g) con 1/2 taza de arroz y 1/2 taza de verduras cocidas", "calorias": 638.0, "proteina": 30.0, "lipidos": 22.0, "carbohidratos": 80.0, "costo": 85.0},
+        {"tipo": "comida", "nombre": "Arroz con verduras (3/4 de taza) y bistec de res a la mexicana (100 g)", "calorias": 684.0, "proteina": 32.0, "lipidos": 24.0, "carbohidratos": 85.0, "costo": 90.0},
+        {"tipo": "comida", "nombre": "Bistec encebollado (120 g) con 1/2 taza de frijoles de la olla y 2 tortillas de maíz", "calorias": 656.0, "proteina": 35.0, "lipidos": 24.0, "carbohidratos": 75.0, "costo": 88.0},
+        {"tipo": "comida", "nombre": "Caldo de habas (1 taza) y calabacitas rellenas de queso fresco (2 piezas)", "calorias": 670.0, "proteina": 28.0, "lipidos": 22.0, "carbohidratos": 90.0, "costo": 92.0},
+        {"tipo": "comida", "nombre": "Caldo de hongos con pollo deshebrado (1 1/2 tazas) y 2 tortillas de maíz", "calorias": 681.0, "proteina": 34.0, "lipidos": 25.0, "carbohidratos": 80.0, "costo": 95.0},
+        {"tipo": "comida", "nombre": "Carne asada de res (120 g) con nopal asado y 2 tortillas de maíz", "calorias": 704.0, "proteina": 32.0, "lipidos": 24.0, "carbohidratos": 90.0, "costo": 100.0},
+        {"tipo": "comida", "nombre": "Cerdo en salsa verde con nopales (120 g de carne y 1/2 taza de nopales)", "calorias": 694.0, "proteina": 30.0, "lipidos": 26.0, "carbohidratos": 85.0, "costo": 105.0},
+        {"tipo": "comida", "nombre": "Ceviche de pescado blanco (120 g) con 4 tostadas horneadas", "calorias": 708.0, "proteina": 28.0, "lipidos": 24.0, "carbohidratos": 95.0, "costo": 110.0},
+        {"tipo": "comida", "nombre": "Consomé de verduras (1 taza) y carne de cerdo en salsa morita (120 g)", "calorias": 659.0, "proteina": 33.0, "lipidos": 23.0, "carbohidratos": 80.0, "costo": 98.0},
+        {"tipo": "comida", "nombre": "Estofado de pollo con papa y zanahoria (1 1/2 tazas)", "calorias": 669.0, "proteina": 36.0, "lipidos": 25.0, "carbohidratos": 75.0, "costo": 105.0},
+
     ]
 
     cenas: List[Platillo] = [
@@ -132,10 +155,21 @@ def _catalogo_dummy() -> Dict[str, List[Platillo]]:
         {"tipo": "cena", "nombre": "Hot dog (2 pzas) con jitomate y cebolla",           "calorias": 520.0, "proteina": 18.0, "lipidos": 28.0, "carbohidratos": 48.0, "costo": 45.0},
         {"tipo": "cena", "nombre": "Pizza (2 rebanadas) y ensalada verde",              "calorias": 580.0, "proteina": 24.0, "lipidos": 25.0, "carbohidratos": 65.0, "costo": 60.0},
         {"tipo": "cena", "nombre": "Torta de jamón con aguacate y queso",               "calorias": 550.0, "proteina": 25.0, "lipidos": 22.0, "carbohidratos": 60.0, "costo": 67.5},
-        {"tipo": "cena", "nombre": "Tamal salado (1 pza) y atole",                      "calorias": 510.0, "proteina": 12.0, "lipidos": 18.0, "carbohidratos": 75.0, "costo": 33.0},
+        {"tipo": "cena", "nombre": "Champiñones sofreidos (1 pza), 1 vaso leche y fruta de temporada",                      "calorias": 510.0, "proteina": 12.0, "lipidos": 18.0, "carbohidratos": 75.0, "costo": 33.0},
         {"tipo": "cena", "nombre": "Empanada de atún (3 pzas) y ensalada",              "calorias": 540.0, "proteina": 28.0, "lipidos": 26.0, "carbohidratos": 50.0, "costo": 50.0},
         {"tipo": "cena", "nombre": "Budín azteca (porción grande)",                     "calorias": 560.0, "proteina": 25.0, "lipidos": 28.0, "carbohidratos": 52.0, "costo": 97.5},
         {"tipo": "cena", "nombre": "Lasagna vegetariana y pan de ajo",                  "calorias": 530.0, "proteina": 20.0, "lipidos": 22.0, "carbohidratos": 60.0, "costo": 105.0},
+        #Nuevas IMSS
+        {"tipo": "cena", "nombre": "Calabacitas a la mexicana (1 taza) con queso panela (30 g) y 1 taza de papaya en cubos", "calorias": 406.0, "proteina": 20.0, "lipidos": 14.0, "carbohidratos": 50.0, "costo": 45.0},
+        {"tipo": "cena", "nombre": "Caldo tlalpeño ligero (1 taza) con pollo y 1 mandarina mediana", "calorias": 418.0, "proteina": 18.0, "lipidos": 14.0, "carbohidratos": 55.0, "costo": 48.0},
+        {"tipo": "cena", "nombre": "Chayotes al horno con queso Oaxaca (1 taza) y 1/2 taza de fresas en mitades", "calorias": 403.0, "proteina": 22.0, "lipidos": 15.0, "carbohidratos": 45.0, "costo": 50.0},
+        {"tipo": "cena", "nombre": "Chile poblano relleno de atún a la mexicana (1 pieza) y 1/2 taza de mango ataúlfo en cubos", "calorias": 420.0, "proteina": 19.0, "lipidos": 16.0, "carbohidratos": 50.0, "costo": 52.0},
+        {"tipo": "cena", "nombre": "Coliflor rellena gratinada (1 taza) y 1/2 taza de uvas rojas", "calorias": 402.0, "proteina": 21.0, "lipidos": 14.0, "carbohidratos": 48.0, "costo": 47.0},
+        {"tipo": "cena", "nombre": "Ensalada de huevo con verduras (1 taza) y 1 naranja mediana", "calorias": 420.0, "proteina": 18.0, "lipidos": 12.0, "carbohidratos": 60.0, "costo": 49.0},
+        {"tipo": "cena", "nombre": "Huarache de nopal con frijoles y queso fresco (1 pieza) y 2 guayabas medianas", "calorias": 417.0, "proteina": 20.0, "lipidos": 13.0, "carbohidratos": 55.0, "costo": 55.0},
+        {"tipo": "cena", "nombre": "Huevo a la mexicana (2 piezas) y 1 plátano Tabasco mediano", "calorias": 414.0, "proteina": 22.0, "lipidos": 14.0, "carbohidratos": 50.0, "costo": 50.0},
+        {"tipo": "cena", "nombre": "Jitomates rellenos de atún (2 piezas) y 1 taza de papaya en cubos", "calorias": 419.0, "proteina": 19.0, "lipidos": 15.0, "carbohidratos": 52.0, "costo": 48.0},
+        {"tipo": "cena", "nombre": "Mollete integral de frijol con queso (1 pieza) y 1/2 taza de fresas en mitades", "calorias": 401.0, "proteina": 21.0, "lipidos": 13.0, "carbohidratos": 50.0, "costo": 45.0},
     ]
 
     return {"desayuno": desayunos, "comida": comidas, "cena": cenas}

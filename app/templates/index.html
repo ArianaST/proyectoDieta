@@ -28,7 +28,7 @@
             name="dias"
             class="form-control"
             min="1"
-            max="14"
+            max="9"
             placeholder="Ej. 7"
             required
             oninvalid="this.setCustomValidity('No se puede dejar vacío')"
@@ -121,6 +121,31 @@
             oninvalid="this.setCustomValidity('No se puede dejar vacío')"
             oninput="this.setCustomValidity('')"
           >
+        </div>
+      </div>
+	  
+	  <!-- Actividad_fisica -->
+      <div class="col-md-4">
+        <label for="actividad_fisica" class="form-label">Actividad física</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-activity"></i>
+          </span>
+          <select
+            id="actividad_fisica"
+            name="actividad_fisica"
+            class="form-select"
+            required
+            oninvalid="this.setCustomValidity('No se puede dejar vacío')"
+            oninput="this.setCustomValidity('')"
+          >
+            <option value="" selected disabled>Nivel de actividad física</option>
+            <option value="1_sedentario">Poco o ningún ejercicio</option>
+			<option value="2_bajo">Ejercicio ligero (1-3 horas a la semana)</option>
+			<option value="3_medio">Ejercicio moderado (3-5 horas a la semana)</option>
+			<option value="4_alto">Ejercicio fuerte (6-7 horas a la semana)</option>
+            <option value="5_deportista">Alto rendimiento (7-14 horas a la semana) </option>
+          </select>
         </div>
       </div>
 

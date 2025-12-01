@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (autoForm) {
     setTimeout(() => {
       autoForm.submit();
-    }, 100);
+    }, );
   }
 
   //    (welcome.html -> index)

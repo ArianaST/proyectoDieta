@@ -5,7 +5,7 @@ import pandas as pd
 
 from . import app  
 from .core.modelo_csp import resolver_csp
-#from .core.recocido import aplicar_recocido aun no ocupo pk es DEMO
+
 
 
 # Cargar BD_JUNTA.csv una sola vez
@@ -57,6 +57,8 @@ def loading():
     altura_cm = float(alt_raw) if alt_raw else 0.0
     genero = request.form.get("genero", "otro")
     edad_anios = int(edad_raw) if edad_raw else 5
+    actividad_fisica = request.form.get("actividad_fisica", "otro")
+
 
     parametros = {
         "dias": dias,
@@ -64,6 +66,8 @@ def loading():
         "altura_cm": altura_cm,
         "genero": genero,
         "edad_anios": edad_anios,
+        "actividad_fisica": actividad_fisica,
+
     }
 
     return render_template("loading.html", parametros=parametros)
@@ -75,7 +79,7 @@ def referencias():
 @app.route("/plan", methods=["POST"])
 def generar_plan():
     """
-    Genera el plan DEMO usando el CSP de juego y muestra los resultados.
+    Genera el plan usando CSP y recocido
     """
     dias_raw = request.form.get("dias", "1")
     peso_raw = request.form.get("peso_kg", "0")
@@ -87,6 +91,7 @@ def generar_plan():
     altura_cm = float(alt_raw) if alt_raw else 0.0
     genero = request.form.get("genero", "otro")
     edad_anios = int(edad_raw) if edad_raw else 5
+    actividad_fisica = request.form.get("actividad_fisica", "otro")
 
 
     parametros = {
@@ -95,6 +100,8 @@ def generar_plan():
         "altura_cm": altura_cm,
         "genero": genero,
         "edad_anios": edad_anios,
+        "actividad_fisica": actividad_fisica,
+
     }
 
     solucion = resolver_csp(parametros, df_bd)
