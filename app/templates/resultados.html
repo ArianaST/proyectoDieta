@@ -5,21 +5,63 @@
 {% block content %}
 <h1 class="mb-3">Resultados del plan (DEMO)</h1>
 
-<h4>Resumen</h4>
-<ul>
-  <li><strong>Días:</strong> {{ resumen.dias }}</li>
-  <li><strong>Peso (kg):</strong> {{ resumen.peso_kg }}</li>
-  <li><strong>Altura (cm):</strong> {{ resumen.altura_cm }}</li>
-  <li><strong>Género:</strong> {{ resumen.genero }}</li>
-  <li>
-    <strong>IMC calculado:</strong>
-    {% if resumen.imc is not none %}
-      {{ resumen.imc }}
-    {% else %}
-      No disponible
-    {% endif %}
-  </li>
-</ul>
+<div class="row">
+  <!-- Datos del paciente -->
+  <div class="col-md-6">
+    <h4>Datos del paciente</h4>
+    <ul>
+      <li><strong>Días:</strong> {{ resumen.dias }}</li>
+      <li><strong>Peso (kg):</strong> {{ resumen.peso_kg }}</li>
+      <li><strong>Altura (cm):</strong> {{ resumen.altura_cm }}</li>
+      <li><strong>Género:</strong> {{ resumen.genero }}</li>
+	  <li><strong>Edad:</strong> {{ resumen.edad_anios }}</li>
+      <li>
+        <strong>IMC calculado:</strong>
+        {% if resumen.imc is not none %}
+          {{ resumen.imc }}
+        {% else %}
+          No disponible
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Consumo recomendado de nutrientes -->
+  <div class="col-md-6">
+    <h4>Consumo recomendado diario (nutrientes)</h4>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Nutriente</th>
+          <th>Mínimo</th>
+          <th>Máximo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Calorías (kcal)</td>
+          <td>{{ resumen.calorias_min }}</td>
+          <td>{{ resumen.calorias_max }}</td>
+        </tr>
+        <tr>
+          <td>Proteína (g)</td>
+          <td>{{ resumen.proteina_min }}</td>
+          <td>{{ resumen.proteina_max }}</td>
+        </tr>
+        <tr>
+          <td>Lípidos (g)</td>
+          <td>{{ resumen.lipidos_min }}</td>
+          <td>{{ resumen.lipidos_max }}</td>
+        </tr>
+        <tr>
+          <td>Carbohidratos (g)</td>
+          <td>{{ resumen.carbohidratos_min }}</td>
+          <td>{{ resumen.carbohidratos_max }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <hr>
 
@@ -40,6 +82,15 @@
     {% endfor %}
   </tbody>
 </table>
+
+<p class="mt-2">
+      Si usted se encuentra en período de embarazo o lactancia, es atleta de alto rendimiento o padece una enfermedad metabólica
+      (diabetes, insuficiencia renal u obesidad mórbida), el calculador de nutrientes diarios puede subestimar o sobrestimar sus
+      necesidad de consumo enérgico y proteínico. <br>
+	  <br>
+      <em>* Consulta a tu médico. Esta información es una guía que pretende ser un punto de referencia, las acciones que se tomen
+      con base en esta información son responsabilidad de quien las efectue.</em>
+    </p>
 
 <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Volver</a>
 {% endblock %}

@@ -17,7 +17,6 @@ if DATA_DIR is None:
 BD_PATH = DATA_DIR / "BD_JUNTA.csv"
 
 df_bd = pd.read_csv(BD_PATH)
-# quitar columnas tipo 'Unnamed: 0' si existen
 df_bd = df_bd.loc[:, ~df_bd.columns.str.startswith("Unnamed")]
 
 # endpointtttttttt
@@ -70,7 +69,7 @@ def loading():
 @app.route("/plan", methods=["POST"])
 def generar_plan():
     """
-    Genera el plan DEMO usando el CSP de juguete y muestra los resultados.
+    Genera el plan DEMO usando el CSP de juego y muestra los resultados.
     """
     dias_raw = request.form.get("dias", "1")
     peso_raw = request.form.get("peso_kg", "0")

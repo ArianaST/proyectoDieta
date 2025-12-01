@@ -1,8 +1,7 @@
 // app/static/js/main.jsp
-// app/static/js/main.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Vista de loading: auto-envía el form oculto hacia /plan
+  //  auto-envía el form oculto hacia /plan
   const autoForm = document.getElementById("auto-form");
   if (autoForm) {
     setTimeout(() => {
@@ -10,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1100);
   }
 
-  // Vista de bienvenida: redirige al formulario (/inicio) tras unos segundos
+  //  redirige al formulario (/inicio) tras unos segundos
   const welcomeScreen = document.getElementById("welcome-screen");
   if (welcomeScreen) {
     const nextUrl = welcomeScreen.dataset.nextUrl;
