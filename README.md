@@ -149,19 +149,19 @@ http://127.0.0.1:5000
 
 ### Pantalla de bienvenida
 
-![Pantalla de bienvenida](docs/screenshots/01_bienvenida.png)
+![Pantalla de bienvenida](docs/01_bienvenida.png)
 
 ### Formulario de datos
 
-![Formulario de datos](docs/screenshots/02_formulario.png)
+![Formulario de datos](docs/02_formulario.png)
 
 ### Referencias del proyecto
 
-![Referencias del proyecto](docs/screenshots/03_referencias.png)
+![Referencias del proyecto](docs/03_referencias.png)
 
 ### Resultados del plan alimenticio
 
-![Resultados del plan alimenticio](docs/screenshots/04_resultados.png)
+![Resultados del plan alimenticio](docs/04_resultados.png)
 
 
 ---
