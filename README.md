@@ -163,42 +163,6 @@ http://127.0.0.1:5000
 
 ![Resultados del plan alimenticio](docs/screenshots/04_resultados.png)
 
----
-
-## Cómo agregar más imágenes al README
-
-1. Crea una carpeta dentro del proyecto:
-
-```bash
-mkdir -p docs/screenshots
-```
-
-2. Guarda tus capturas dentro de esa carpeta. Ejemplo:
-
-```text
-docs/screenshots/mi_captura.png
-```
-
-3. Agrega la imagen en el README usando Markdown:
-
-```markdown
-![Descripción de la imagen](docs/screenshots/mi_captura.png)
-```
-
-4. Sube los cambios a GitHub:
-
-```bash
-git add README.md docs/screenshots/
-git commit -m "Agregar README con pipeline de IA y capturas"
-git push
-```
-
----
-
-## Contacto
-
-Autor / contacto: **Miguel López**  
-Correo: **migpt.pcic@gmail.com**
 
 ---
 
